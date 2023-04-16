@@ -150,7 +150,7 @@ void moveball (sfRenderWindow *window, ball *bal, player *no1, player *no2, sfEv
     if (bal->pos.y + 20 >= no2->pos.y && bal->pos.y <= no2->pos.y + no2->size && bal->pos.x + 10 >= no2->pos.x) {
         bal->trajec.x *= -1; direction(bal, no2);
     }
-    if (bal->pos.x >= 1000) {
+    if (bal->pos.x + 20 >= 1000) {
         if (bal->trajec.x > 0) 
             bal->trajec.x = 0.1; 
         else
@@ -158,8 +158,8 @@ void moveball (sfRenderWindow *window, ball *bal, player *no1, player *no2, sfEv
         bal->pos.x = 450;
         no1->score++;
         if (no1->score == 10) win(window, 1, event), no1->score = 0,
-        no2->score = 0, bal->pos = (sfVector2f){450, 450},
-        no1->pos = (sfVector2f){10, 300}, no2->pos = (sfVector2f){980, 300};
+                                  no2->score = 0, bal->pos = (sfVector2f){450, 450},
+                                  no1->pos = (sfVector2f){10, 300}, no2->pos = (sfVector2f){980, 300}, bal->trajec = (sfVector2f){0.1, 0};
     }
     if (bal->pos.x <= 0) {
         if (bal->trajec.x > 0) 
@@ -169,18 +169,30 @@ void moveball (sfRenderWindow *window, ball *bal, player *no1, player *no2, sfEv
         bal->pos.x = 450;
         no2->score++;
         if (no2->score == 10) win(window, 2, event), no1->score = 0,
-        no2->score = 0, bal->pos = (sfVector2f){450, 450},
-        no1->pos = (sfVector2f){10, 300}, no2->pos = (sfVector2f){980, 300};
+                                  no2->score = 0, bal->pos = (sfVector2f){450, 450},
+                                  no1->pos = (sfVector2f){10, 300}, no2->pos = (sfVector2f){980, 300}, bal->trajec = (sfVector2f){0.1, 0};
     }
     if (bal->pos.y <= 0 || bal->pos.y + 20 >= 1000) bal->trajec.y *= -1;
     if (bal->trajec.x >= 0) {
-        bal->trajec.x += 0.000005;
+        bal->trajec.x += 0.00001;
     } else  {
-        bal->trajec.x -= 0.000005;
+        bal->trajec.x -= 0.00001;
     }
     if (sfKeyboard_isKeyPressed(sfKeyG)) {
         no1->score = 0, no2->score = 0, bal->pos = (sfVector2f){450, 450}; 
-        no1->pos = (sfVector2f){10, 300}, no2->pos = (sfVector2f){980, 300}; trap(window, event);
+        no1->pos = (sfVector2f){10, 300}, no2->pos = (sfVector2f){980, 300}, bal->trajec = (sfVector2f){0.1, 0}; trap(window, event);
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyW)) {
+        no1->size += 1; sfRectangleShape_setSize(no1->rect, (sfVector2f){10, no1->size});
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyQ) && no2->size > 10) {
+        no2->size -= 1; sfRectangleShape_setSize(no2->rect, (sfVector2f){10, no2->size});
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyA)) {
+        no2->size += 1; sfRectangleShape_setSize(no2->rect, (sfVector2f){10, no2->size});
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyE) && no1->size > 10) {
+        no1->size -= 1; sfRectangleShape_setSize(no1->rect, (sfVector2f){10, no1->size});
     }
 }
 
