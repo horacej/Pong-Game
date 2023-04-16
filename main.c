@@ -147,17 +147,17 @@ void moveball (sfRenderWindow *window, ball *bal, player *no1, player *no2, sfEv
     if (bal->pos.y + 20 >= no1->pos.y && bal->pos.y <= no1->pos.y + no1->size && bal->pos.x <= no1->pos.x) {
         bal->trajec.x *= -1; direction(bal, no1);
         if (bal->trajec.x >= 0) {                                    
-            bal->trajec.x += 0.0001;
+            bal->trajec.x += 0.1;
         } else  {
-            bal->trajec.x -= 0.0001;
+            bal->trajec.x -= 0.1;
         }
     }
     if (bal->pos.y + 20 >= no2->pos.y && bal->pos.y <= no2->pos.y + no2->size && bal->pos.x + 10 >= no2->pos.x) {
         bal->trajec.x *= -1; direction(bal, no2);
         if (bal->trajec.x >= 0) {
-            bal->trajec.x += 0.01;
+            bal->trajec.x += 0.1;
         } else  {
-            bal->trajec.x -= 0.01;
+            bal->trajec.x -= 0.1;
         }
     }
     if (bal->pos.x + 20 >= 1000) {
